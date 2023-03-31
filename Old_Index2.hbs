@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/style.css">
+  <title>Document</title>
+</head>
+<body>
+  <nav>
+    <h2>Home Page</h2>
+    <ul>
+      <li><a href="/">Home</a></li>
+      {{#if user}}
+        <li><a href="/profile">Profile</a></li>
+        <li><a href="/auth/logout">Logout</a></li>
+      {{else}}
+        <li><a href="/login">Influencer Login</a></li>
+        <li><a href="/loginBusiness">Business Login</a></li>
+        {{!-- <li><a href="/signup">Before signup</a></li> --}}
+        <li><a href="/influencer">Signup</a></li>
+        <li><a href="/listI">Influencers List</a></li>
+        <li><a href="/listB">Businesses List</a></li>
+        {{!-- <li><a href="/business">Business</a></li> --}}
+      {{/if}}
+    </ul>
+  </nav>
+  <div class="container">
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur repellat maiores repudiandae culpa nisi, voluptas eaque, officiis, tenetur fuga aperiam praesentium? Ducimus, at iusto! Voluptas nihil velit accusantium exercitationem eveniet!</p>
+  </div>
+</body>
+</html>

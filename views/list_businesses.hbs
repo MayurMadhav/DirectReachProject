@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+    crossorigin="anonymous"></script>
+  <script>
+    $(document).ready(function () {
+      $('#search-input').on('input', function () {
+        var input = $(this).val().toLowerCase();
+        $('table tr').filter(function () {
+          $(this).toggle($(this).text().toLowerCase().indexOf(input) > -1);
+        });
+      });
+    });
+  </script>
+</head>
+
+<body>
+
+  <h1>
+    {{!-- <%= title %> --}}
+  </h1>
+  <table border="2px">
+
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <h1>The list of businesses who are looking for a influencer to market their product.</h1>
+          <div class="col"></div>
+        </div>
+      </div>
+      <input type="text" id="search-input" placeholder="Search by Business Name or Category..">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <tr>
+              <th scope="col">Business ID</th>
+              <th scope="col">Owner Name</th>
+              <th scope="col">email</th>
+              <th scope="col">Business Name</th>
+              <th scope="col">Duration of Business</th>
+              <th scope="col">Category of Business</th>
+              <th scope="col">Phone Number</th>
+              <th scope="col">Origin</th>
+              <th scope="col">State</th>
+            </tr>
+
+            {{#each rows}}
+            <tr>
+              <td>
+                {{this.business_id}}
+                {{!-- 1 --}}
+              </td>
+              <td>
+                {{this.ownername}}
+                {{!-- Virat --}}
+              </td>
+
+              <td>
+                {{this.c_email}}
+                {{!-- Kohli --}}
+              </td>
+
+              <td>
+                {{this.businessName}}
+                {{!-- Interest --}}
+              </td>
+
+              <td>
+                {{this.durationBusiness}}
+                {{!-- Email --}}
+              </td>
+
+              <td>
+                {{this.categoryBusiness}}
+                {{!-- Locality --}}
+              </td>
+
+              <td>
+                {{this.phoneNumber}}
+                {{!-- State --}}
+              </td>
+
+              <td>
+                {{this.origin}}
+                {{!-- Gender --}}
+              </td>
+
+              <td>
+                {{this.state}}
+                {{!-- Languages --}}
+              </td>
+
+            </tr>
+
+            {{/each}}
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </table>
+  <!-- </div>
+        </tbody>
+        </table>
+      </div> -->
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-primary">Save changes</button>
+  </div>
+  <a href="./" style="color:black">BACK TO HOME PAGE</a> <br>
+  </div>
+  </div>
+
+  </div>
+</body>
+{{!--
+<script>$(".modal").modal("show")</script> --}}
+
+</html>

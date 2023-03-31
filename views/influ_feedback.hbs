@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f7f7f7;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 700px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            text-align: center;
+        }
+
+        h3 {
+            font-size: 36px;
+            color: #04AA6D;
+            margin-bottom: 30px;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        label {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        select,
+        textarea {
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            padding: 10px;
+        }
+
+        input[type="submit"] {
+            background-color: #04AA6D;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0E7C53;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #04AA6D;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h3>Feedback for Influencer by Business</h3>
+        <form action="/i_feedback_controller/submitFeedback" method="POST">
+
+            <label for="business">Business Name</label>
+            <select id="business" name="business" required>
+                {{#each bnames}}
+                <option value="{{this.business_id}}">{{this.businessname}}</option>
+                {{/each}}
+            </select>
+
+            <label for="influencer">Worked with Influencer</label>
+            <select id="influencer" name="influencer" required>
+                {{#each results}}
+                <option value="{{this.influencer_id}}">{{this.firstname}} </option>
+                {{/each}}
+            </select>
+
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Write about your experience.."
+                style="height:200px" required></textarea>
+
+            <input type="submit" value="Submit">
+            {{#if message}}
+            <h1>{{message}}</h1>
+            {{/if}}
+        </form>
+
+    </div>
+
+
+</body>
+
+</html>
+
+
+
+{{!-- <form action="/i_feedback_controller/submitFeedback" method="POST">
+
+
+    <label for="business">Business Name</label>
+    <select id="business" name="business">
+        {{#each bnames}}
+        <option value="{{this.business_id}}">{{this.businessname}}</option>
+        {{/each}}
+    </select>
+
+    <label for="influencer">Worked with Influencer</label>
+    <select id="influencer" name="influencer">
+        {{#each results}}
+        <option value="{{this.influencer_id}}">{{this.firstname}}</option>
+        {{/each}}
+    </select>
+
+    <label for="subject">Subject</label>
+    <textarea id="message" name="message" placeholder="Write something.." style="height:200px"></textarea>
+
+    <input type="submit" value="Submit">
+</form> --}}
