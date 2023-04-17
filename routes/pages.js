@@ -21,26 +21,52 @@ router.use(session({
   saveUninitialized: true
 }));
 
-const db = mysql.createConnection({
+const db = {
   host: '127.0.0.1',
   user:  'root',
   password:  'mysql',
   database: 'directreach'
-}); 
+};
 
-
-
-// router.get('/',(req, res) => {
-//     res.render('index')
-// })
 router.get('/', authController.isLoggedIn, (req, res) => {
-    console.log(req.user);
-    res.render('index', {
-      user: req.user
-    });
-  });
+  const connection = mysql.createConnection(db);
+  connection.query('SELECT COUNT(*) AS count FROM influencer_signup', (error, results) => {
+    if (error) {
+      console.error(error);
+      connection.destroy();
+      return res.render('error', { message: 'Failed to retrieve influencers count.' });
+    }
+    const count = results[0].count;
 
-  // router.get('/iupdate',(req, res) => {
+    connection.query('SELECT COUNT(*) AS count FROM business_signup', (error, results) => {
+      if (error) {
+        console.error(error);
+        connection.destroy();
+        return res.render('error', { message: 'Failed to retrieve influencers count.' });
+      }
+      const countb = results[0].count;
+    
+    // connection.destroy();
+    res.render('index', { user: req.user, count, countb });
+  });
+  });
+});
+
+
+
+
+// router.get('/', authController.isLoggedIn, (req, res) => {
+//     console.log(req.user);
+//     res.render('index', {
+//       user: req.user
+//     });
+//   });
+
+
+
+
+
+// router.get('/iupdate',(req, res) => {
   //   res.render("profile")
   // })
 
@@ -71,29 +97,42 @@ router.get('/profile', (req, res) => {
   res.render('profile',{email});
 });
 */
+const requireLogin = (req, res, next) => {
+  if (!req.session.email) {
+    return res.redirect('/login');
+  }
+  next();
+};
+
 router.get('/profile', (req, res) => {
   const email = req.session.email;
   
-  db.query(
+  const connection = mysql.createConnection(db);
+  connection.query(
     'SELECT * FROM influencer_signup WHERE email = ?',
     [email],
     (error, results) => {
       if (error) {
         console.log(error);
+        connection.destroy();
         return res.status(500).send('Server error');
       }
 
       const user = results[0];
       console.log(user)
+      connection.destroy();
       res.render('profile', { email,user });
     }
   );
 });
 
+
 router.get('/bprofile', (req, res) => {
   const c_email = req.session.c_email;
   
-  db.query(
+  const connection = mysql.createConnection(db);
+
+  connection.query(
     'SELECT * FROM business_signup WHERE c_email = ?',
     [c_email],
     (error, results) => {
@@ -108,6 +147,35 @@ router.get('/bprofile', (req, res) => {
     }
   );
 });
+
+
+
+
+
+
+
+
+// router.get('/profile', (req, res) => {
+//   const email = req.session.email;
+  
+
+//   db.query(
+//     'SELECT * FROM influencer_signup WHERE email = ?',
+//     [email],
+//     (error, results) => {
+//       if (error) {
+//         console.log(error);
+//         return res.status(500).send('Server error');
+//       }
+
+//       const user = results[0];
+//       console.log(user)
+//       res.render('profile', { email,user });
+//     }
+//   );
+// });
+
+
 
 
 
@@ -217,5 +285,11 @@ router.post('/b_feedback_controller/submitFeedback',feedback_business.submitFeed
 router.post('/update_profile/iupdate', i_profileUpdate.iupdate)
 
 router.post('/update_profile/bupdate', b_profileUpdate.bupdate)
+
+
+
+
+
+
 
 module.exports = router;

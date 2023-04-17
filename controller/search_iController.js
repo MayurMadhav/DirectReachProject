@@ -7,25 +7,54 @@ const pool = mysql.createPool({
     database: process.env.MYSQL_DATABASE
 })
 
-pool.getConnection((err, connection) => {
-  if(err) throw err
-  console.log('connected as ID '+ connection.threadId)
-
-});
+// Define the stored procedure name
+const PROCEDURE_NAME = 'get_influencers_by_interest';
 
 exports.search = (req, res) => {
-  const searchQuery = req.query.search_query;
+  const areaOfInterest = req.body.areaOfInterest;
 
-  const query = `SELECT FirstName FROM influencer_signup WHERE FirstName LIKE '%${searchQuery}%' OR AreaOfInterest LIKE '%${searchQuery}%'`;
-
-  pool.query(query, (error, results) => {
+  // Call the stored procedure with the provided area of interest
+  pool.query(`CALL ${PROCEDURE_NAME}('${areaOfInterest}')`, (error, results) => {
     if (error) {
-      throw error;
+      console.log(error);
+      return res.status(500).send('Server error');
     }
 
-    res.render('search_Influencer', { results });
+    // Process the results and return them to the frontend
+    const influencers = results[0];
+    res.render('search', { influencers });
   });
 }
+
+
+// const mysql = require('mysql2')
+
+// const pool = mysql.createPool({
+//     host: process.env.MYSQL_HOST,
+//     user: process.env.MYSQL_USER,
+//     password: process.env.MYSQL_PASSWORD,
+//     database: process.env.MYSQL_DATABASE
+// })
+
+// pool.getConnection((err, connection) => {
+//   if(err) throw err
+//   console.log('connected as ID '+ connection.threadId)
+
+// });
+
+// exports.search = (req, res) => {
+//   const searchQuery = req.query.search_query;
+
+//   const query = `SELECT FirstName FROM influencer_signup WHERE FirstName LIKE '%${searchQuery}%' OR AreaOfInterest LIKE '%${searchQuery}%'`;
+
+//   pool.query(query, (error, results) => {
+//     if (error) {
+//       throw error;
+//     }
+
+//     res.render('search_Influencer', { results });
+//   });
+// }
 
 
 

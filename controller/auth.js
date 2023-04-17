@@ -5,6 +5,8 @@ const bcrypt = require('bcryptjs');
 const session = require('express-session');
 require("dotenv").config();
 
+const jwt = require('jsonwebtoken');
+
 app.use(session({
   secret: 'secret123',
   resave: false,
@@ -328,11 +330,11 @@ exports.influencer = (req, res) => {
       console.log(error);
     }
     if (result.length > 0) {
-      return res.render('signup', {
+      return res.render('influencer', {
         message: 'That email already exists!'
       })
     } else if (password !== passwordConfirm) {
-      return res.render('signup', {
+      return res.render('influencer', {
         message: 'Passwords do not match!'
       });
     }
