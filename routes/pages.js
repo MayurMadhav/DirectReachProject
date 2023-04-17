@@ -6,19 +6,43 @@ const business_controller = require('../controller/business_controller');
 const feedback_influencer = require('../controller/i_feedback_controller');
 const feedback_business = require('../controller/b_feedback_controller');
 
+const i_profileUpdate = require('../controller/update_profile')
+const b_profileUpdate = require('../controller/update_profile')
+
+
+const session = require('express-session');
+const mysql = require('mysql2')
 
 const router = express.Router(); 
+
+router.use(session({
+  secret: 'secret123',
+  resave: false,
+  saveUninitialized: true
+}));
+
+const db = mysql.createConnection({
+  host: '127.0.0.1',
+  user:  'root',
+  password:  'mysql',
+  database: 'directreach'
+}); 
+
+
 
 // router.get('/',(req, res) => {
 //     res.render('index')
 // })
 router.get('/', authController.isLoggedIn, (req, res) => {
-    console.log("inside");
     console.log(req.user);
     res.render('index', {
       user: req.user
     });
   });
+
+  // router.get('/iupdate',(req, res) => {
+  //   res.render("profile")
+  // })
 
 // router.get('/profile', authController.isLoggedIn, (req, res) => {
 //   console.log("inside");
@@ -34,10 +58,79 @@ router.get('/', authController.isLoggedIn, (req, res) => {
 // });
 
 
+// router.get('/profile', (req, res) => {
+//   res.render('profile', );
+// });
 
+/*
+correct
 router.get('/profile', (req, res) => {
-  res.render('profile');
+  const email = req.session.email;
+  // retrieve user details from the database using the email
+  // render the user details page
+  res.render('profile',{email});
 });
+*/
+router.get('/profile', (req, res) => {
+  const email = req.session.email;
+  
+  db.query(
+    'SELECT * FROM influencer_signup WHERE email = ?',
+    [email],
+    (error, results) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).send('Server error');
+      }
+
+      const user = results[0];
+      console.log(user)
+      res.render('profile', { email,user });
+    }
+  );
+});
+
+router.get('/bprofile', (req, res) => {
+  const c_email = req.session.c_email;
+  
+  db.query(
+    'SELECT * FROM business_signup WHERE c_email = ?',
+    [c_email],
+    (error, results) => {
+      if (error) {
+        console.log(error);
+        return res.status(500).send('Server error');
+      }
+
+      const user = results[0];
+      console.log(user)
+      res.render('bprofile', { c_email,user });
+    }
+  );
+});
+
+
+
+// router.get('/profile', (req, res) => {
+//   const FirstName = req.session.FirstName;
+//   // retrieve user details from the database using the email
+//   // render the user details page
+//   res.render('profile',{FirstName});
+// });
+
+
+
+
+
+// router.get('/profile', (req, res) => {
+//   const firstname = req.session.username;
+//   if (!firstname) {
+//     return res.status(400).send("Username not found");
+//   }
+//   res.render('profile', { firstname });
+// });
+
+
 router.get('/dashboard', (req, res) => {
   res.render('dashboard');
 });
@@ -121,7 +214,8 @@ router.get('/bFeedback', feedback_business.feedback,  (req, res) => {
 
 router.post('/b_feedback_controller/submitFeedback',feedback_business.submitFeedback)
 
+router.post('/update_profile/iupdate', i_profileUpdate.iupdate)
 
-
+router.post('/update_profile/bupdate', b_profileUpdate.bupdate)
 
 module.exports = router;

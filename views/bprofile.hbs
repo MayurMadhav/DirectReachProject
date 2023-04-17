@@ -142,10 +142,11 @@
           {{!-- <a class="nav-link text-white " href="ifeedback"> --}}
             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
               {{!-- <i class="material-icons opacity-10">F</i> --}}
-              {{!-- <div class="dropdown"> --}}
-                <a href="bfeedback"><button class="dropbtn">Feedback</button></a>
-            <div>
-                {{!-- <div class="dropdown-content">
+              <a href="bfeedback"><button class="dropbtn">Feedback</button></a>
+              </div>
+              {{!-- <div class="dropdown">
+                <button class="dropbtn">Feedback</button>
+                <div class="dropdown-content">
                   <a href="ifeedback">Influencers</a>
                   <a href="bfeedback">Businesses</a>
                 </div>
@@ -180,7 +181,7 @@
     </div>
     <div class="sidenav-footer position-absolute w-100 bottom-0 ">
       <div class="mx-3">
-        <a class="btn bg-gradient-primary mt-4 w-100" href="profile" type="button">Hi {{user.FirstName}}!</a>
+        <a class="btn bg-gradient-primary mt-4 w-100" href="profile" type="button">Hi User!</a>
       </div>
     </div>
   </aside>
@@ -205,7 +206,8 @@
           </div>
           <ul class="navbar-nav  justify-content-end">
             <li class="nav-item d-flex align-items-center">
-              <a class="btn btn-outline-primary btn-sm mb-0 me-3" target="_blank" href="/">Home</a>
+              <a class="btn btn-outline-primary btn-sm mb-0 me-3" target="_blank"
+                href="https://www.creative-tim.com/builder/material?ref=navbar-dashboard">Online Builder</a>
             </li>
             <li class="nav-item d-flex align-items-center">
               <a href="../pages/sign-in.html" class="nav-link text-body font-weight-bold px-0">
@@ -326,7 +328,7 @@
           <div class="col-auto my-auto">
             <div class="h-100">
               <h5 class="mb-1">
-                <h5 class="mb-1">Welcome Back, {{user.FirstName}} !</h5>
+                <h5 class="mb-1">Welcome Back, {{c_email}} !</h5>
               </h5>
               {{!-- <p class="mb-0 font-weight-normal text-sm">{{user.role}}</p> --}}
             </div>
@@ -389,29 +391,25 @@
           <div class="table-responsive">
             <table class="profile-table">
               <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Area of Interest</th>
-                <th>Email</th>
-                <th>Social Media Expertise</th>
-                <th>Locality</th>
+                <th>Owner Name</th>
+                <th>Mail</th>
+                <th>Business Name</th>
+                <th>Duration Business</th>
+                <th>Category Business</th>
+                <th>PhoneNumber</th>
+                <th>Origin</th>
                 <th>State</th>
-                <th>Gender</th>
-                <th>Languages</th>
-                <th>Phone Number</th>
               </tr>
 
               <tr>
-                <td>{{user.FirstName}}</td>
-                <td>{{user.LastName}}</td>
-                <td>{{user.AreaOfInterest}}</td>
-                <td>{{user.email}}</td>
-                <td>{{user.medialink}}</td>
-                <td>{{user.locality}}</td>
-                <td>{{user.state}}</td>
-                <td>{{user.gender}}</td>
-                <td>{{user.languages}}</td>
+                <td>{{user.ownername}}</td>
+                <td>{{user.c_email}}</td>
+                <td>{{user.businessName}}</td>
+                <td>{{user.durationBusiness}}</td>
+                <td>{{user.categoryBusiness}}</td>
                 <td>{{user.phoneNumber}}</td>
+                <td>{{user.origin}}</td>
+                <td>{{user.state}}</td>
               </tr>
             </table>
           </div>
@@ -449,43 +447,38 @@
               </div>
               <div class="modal-body">
                 <div class="table-responsive">
-                  <form action="/update_profile/iupdate" method="POST">
+                  <form action="/update_profile/bupdate" method="POST">
                     <table class="profile-table">
                       <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Area of Interest</th>
-                        <th>Email</th>
-                        <th>Social Media Expertise</th>
-                        <th>Locality</th>
-                        <th>State</th>
-                        <th>Gender</th>
-                        <th>Languages</th>
-                        <th>Phone Number</th>
+                        <th>Owner Name</th>
+                        <th>Business Name</th>
+                        <th>Mail</th>
+                        <th>Duration of Business</th>
+                        <th>Category of Business</th>
+                        <th>phoneNumber</th>
+                        <th>Origin</th>
+                        <th>State </th>
+                        <th>Update</th>
                       </tr>
+
                       <tr>
-                        <td><input type="text" value="{{user.FirstName}}" class="form-control edit-input" id="FirstName"
-                            name="FirstName"></td>
-                        <td><input type="text" value="{{user.LastName}}" class="form-control edit-input" id="LastName"
-                            name="LastName">
+                        <td><input type="text" value="{{user.ownername}}" class="form-control edit-input" id="ownername"
+                            name="ownername"></td>
+                        <td><input type="text" value="{{user.businessName}}" class="form-control edit-input"
+                            id="businessName" name="businessName"></td>
+                        <td><input type="text" value="{{user.c_email}}" class="form-control edit-input"
+                            id="c_email" name="c_email"></td>
+                        <td><input type="text" value="{{user.durationBusiness}}" class="form-control edit-input"
+                            id="durationBusiness" name="durationBusiness"></td>
+                        <td><input type="text" value="{{user.categoryBusiness}}" class="form-control edit-input"
+                            id="categoryBusiness" name="categoryBusiness">
                         </td>
-                        <td><input type="text" value="{{user.AreaOfInterest}}" class="form-control edit-input"
-                            id="AreaOfInterest" name="AreaOfInterest"></td>
-                        <td><input type="email" value="{{user.email}}" class="form-control edit-input" id="email"
-                            name="email"></td>
-                        <td><input type="text" value="{{user.medialink}}" class="form-control edit-input" id="medialink"
-                            name="medialink"></td>
-                        <td><input type="text" value="{{user.locality}}" class="form-control edit-input" id="locality"
-                            name="locality">
-                        </td>
+                        <td><input type="text" value="{{user.phoneNumber}}" class="form-control edit-input"
+                            id="phoneNumber" name="phoneNumber"></td>
+                        <td><input type="text" value="{{user.origin}}" class="form-control edit-input" id="origin"
+                            name="origin"></td>
                         <td><input type="text" value="{{user.state}}" class="form-control edit-input" id="state"
                             name="state"></td>
-                        <td><input type="text" value="{{user.gender}}" class="form-control edit-input" id="gender"
-                            name="gender"></td>
-                        <td><input type="text" value="{{user.languages}}" class="form-control edit-input" id="languages"
-                            name="languages"></td>
-                        <td><input type="tel" value="{{user.phoneNumber}}" class="form-control edit-input"
-                            id="phoneNumber" name="phoneNumber" maxlength="10"></td>
                         <td>
                           <button type="submit" class="btn btn-primary update-profile-btn">Update</button>
                         </td>
@@ -500,7 +493,6 @@
 
 
         {{!-- End --}}
-
 
 
 
@@ -711,17 +703,18 @@
           <div class="col-lg-6">
             <ul class="nav nav-footer justify-content-center justify-content-lg-end">
               <li class="nav-item">
-                <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank"></a>
+                <a href="https://www.creative-tim.com" class="nav-link text-muted" target="_blank">Creative Tim</a>
               </li>
               <li class="nav-item">
-                <a href="/about" class="nav-link text-muted" target="_blank">About
+                <a href="https://www.creative-tim.com/presentation" class="nav-link text-muted" target="_blank">About
                   Us</a>
               </li>
               <li class="nav-item">
-                <a href="/bfeedback" class="nav-link text-muted" target="_blank">Feedback</a>
+                <a href="https://www.creative-tim.com/blog" class="nav-link text-muted" target="_blank">Blog</a>
               </li>
               <li class="nav-item">
-                <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted" target="_blank"></a>
+                <a href="https://www.creative-tim.com/license" class="nav-link pe-0 text-muted"
+                  target="_blank">License</a>
               </li>
             </ul>
           </div>

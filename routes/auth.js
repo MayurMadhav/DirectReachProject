@@ -9,6 +9,7 @@ const express = require('express')
 const authController = require('../controller/auth');
 
 
+
 // const influencer_controller = require('../controller/influencer_controller')
 
 const router = express.Router();
@@ -25,6 +26,8 @@ router.post('/influencer', authController.influencer)
 router.post('/business', authController.business)
 
 
+    
+  
 
 //-----------------------------------------------------
 

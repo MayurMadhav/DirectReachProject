@@ -22,7 +22,7 @@
 
         h3 {
             font-size: 36px;
-            color: #04AA6D;
+            color: #57aa04;
             margin-bottom: 30px;
         }
 
@@ -50,7 +50,7 @@
         }
 
         input[type="submit"] {
-            background-color: #04AA6D;
+            background-color: #aa8e04;
             color: #fff;
             border: none;
             border-radius: 5px;
@@ -62,36 +62,43 @@
         }
 
         input[type="submit"]:hover {
-            background-color: #0E7C53;
+            background-color: #7c310e;
         }
 
         h1 {
             font-size: 24px;
-            color: #04AA6D;
+            color: #aa5704;
             margin-top: 30px;
-        }
+        }   
     </style>
 </head>
 
 <body>
 
     <div class="container">
-        <h3>Feedback for Influencer by Business</h3>
+        <h3>Give a Feedback for an Influencer</h3>
         <form action="/i_feedback_controller/submitFeedback" method="POST">
 
             <label for="business">Business Name</label>
-            <select id="business" name="business" required>
+            {{!-- <label>{{user.businessname}}</label> --}}
+            
+            {{!-- <select id="business" name="business" required>
                 {{#each bnames}}
                 <option value="{{this.business_id}}">{{this.businessname}}</option>
                 {{/each}}
-            </select>
+            </select> --}}
+
+             <input type="text" id="businessName" name="businessName"><br>
 
             <label for="influencer">Worked with Influencer</label>
             <select id="influencer" name="influencer" required>
+                
+                
                 {{#each results}}
                 <option value="{{this.influencer_id}}">{{this.firstname}} </option>
                 {{/each}}
             </select>
+            
 
             <label for="message">Message</label>
             <textarea id="message" name="message" placeholder="Write about your experience.."

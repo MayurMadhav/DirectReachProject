@@ -76,15 +76,18 @@
 <body>
 
     <div class="container">
-        <h3>Feedback for Business by Influencer</h3>
+        <h3>Give a Feedback for a Business</h3>
         <form action="/b_feedback_controller/submitFeedback" method="POST">
 
             <label for="influencer">Influencer</label>
-            <select id="influencer" name="influencer">
+            {{!-- <input type="text" id="fname" name="fname"><br><br> --}}
+            {{!-- <select id="influencer" name="influencer">
                 {{#each results}}
                 <option value="{{this.influencer_id}}"> {{this.firstname}} </option>
                 {{/each}}
-            </select>
+            </select> --}}
+            
+            <input type="text" id="influencerName" name="influencerName"><br>
 
             <label for="business">Worked with Business</label>
             <select id="business" name="business">

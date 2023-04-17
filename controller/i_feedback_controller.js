@@ -1,4 +1,14 @@
 const mysql = require('mysql2')
+const session = require('express-session');
+const express = require('express')
+const app = express();
+
+app.use(session({
+  secret: 'secret123',
+  resave: false,
+  saveUninitialized: true
+}));
+
 
 const pool = mysql.createPool({
     host: process.env.MYSQL_HOST,
@@ -24,17 +34,7 @@ exports.feedback = (req, res) => {
   };
   
   exports.submitFeedback = (req, res) => {
-    const { business, influencer, message } = req.body;
-
-    // get the business name and influencer's first name from the respective tables
-    pool.query(
-      'SELECT businessname FROM business_signup WHERE business_id = ?',
-      [business],
-      (error, results) => {
-        if (error) throw error;
-
-        const businessName = results[0].businessname;
-
+    const { businessName, influencer, message } = req.body;
         pool.query(
           'SELECT firstname FROM influencer_signup WHERE influencer_id = ?',
           [influencer],
@@ -45,18 +45,54 @@ exports.feedback = (req, res) => {
 
             // insert the feedback into the database
             pool.query(
-              'INSERT INTO ifeedback (business_id, businessName, influencer_id, influencer_name, feedback) VALUES (?, ?, ?, ?, ?)',
-              [business, businessName, influencer, influencerName, message],
+              'INSERT INTO influencer_feedback (businessName, influencer_id, influencer_name, feedback) VALUES ( ?, ?, ?, ?)',
+              [businessName, influencer, influencerName, message],
               (error, results) => {
                 if (error) throw error;
                 res.render('influ_feedback', { message: 'Thanks for your feedback!' });
+                res.status(200).redirect("/profile");
               }
             );
           }
         );
       }
-    );
-  };
+
+
+
+  // exports.submitFeedback = (req, res) => {
+  //   const { business, influencer, message } = req.body;
+
+  //   // get the business name and influencer's first name from the respective tables
+  //   // pool.query(
+  //   //   'SELECT businessname FROM business_signup WHERE business_id = ?',
+  //   //   [business],
+  //   //   (error, results) => {
+  //   //     if (error) throw error;
+
+  //   //     const businessName = results[0].businessname;
+
+  //       pool.query(
+  //         'SELECT firstname FROM influencer_signup WHERE influencer_id = ?',
+  //         [influencer],
+  //         (error, results) => {
+  //           if (error) throw error;
+
+  //           const influencerName = results[0].firstname;
+
+  //           // insert the feedback into the database
+  //           pool.query(
+  //             'INSERT INTO ifeedback (business_id, businessName, influencer_id, influencer_name, feedback) VALUES (?, ?, ?, ?, ?)',
+  //             [business, businessName, influencer, influencerName, message],
+  //             (error, results) => {
+  //               if (error) throw error;
+  //               res.render('influ_feedback', { message: 'Thanks for your feedback!' });
+  //             }
+  //           );
+  //         }
+  //       );
+  //     }
+  // //   );
+  // // };
 
 
 

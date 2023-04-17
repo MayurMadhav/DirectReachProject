@@ -24,7 +24,7 @@ exports.feedback = (req, res) => {
   };
   
   exports.submitFeedback = (req, res) => {
-    const { business, influencer, message } = req.body;
+    const { business, influencerName, message } = req.body;
 
     // get the business name and influencer's first name from the respective tables
     pool.query(
@@ -35,26 +35,53 @@ exports.feedback = (req, res) => {
 
         const businessName = results[0].businessname;
 
-        pool.query(
-          'SELECT firstname FROM influencer_signup WHERE influencer_id = ?',
-          [influencer],
-          (error, results) => {
-            if (error) throw error;
-
-            const influencerName = results[0].firstname;
-
             // insert the feedback into the database
             pool.query(
-              'INSERT INTO bfeedback (business_id, business_name, influencer_id, influencer_name, feedback) VALUES (?, ?, ?, ?, ?)',
-              [business, businessName, influencer, influencerName, message],
+              'INSERT INTO business_feedback (business_id, businessName, influencerName, feedback) VALUES (?, ?, ?, ?)',
+              [business, businessName, influencerName, message],
               (error, results) => {
                 if (error) throw error;
                 res.render('busi_feedback', { message: 'Thanks for your feedback!' });
+                res.status(200).redirect("/profile");
               }
             );
           }
         );
       }
-    );
-  };
+
+
+  // exports.submitFeedback = (req, res) => {
+  //   const { business, influencer, message } = req.body;
+
+  //   // get the business name and influencer's first name from the respective tables
+  //   pool.query(
+  //     'SELECT businessname FROM business_signup WHERE business_id = ?',
+  //     [business],
+  //     (error, results) => {
+  //       if (error) throw error;
+
+  //       const businessName = results[0].businessname;
+
+  //       pool.query(
+  //         'SELECT firstname FROM influencer_signup WHERE influencer_id = ?',
+  //         [influencer],
+  //         (error, results) => {
+  //           if (error) throw error;
+
+  //           const influencerName = results[0].firstname;
+
+  //           // insert the feedback into the database
+  //           pool.query(
+  //             'INSERT INTO bfeedback (business_id, business_name, influencer_id, influencer_name, feedback) VALUES (?, ?, ?, ?, ?)',
+  //             [business, businessName, influencer, influencerName, message],
+  //             (error, results) => {
+  //               if (error) throw error;
+  //               res.render('busi_feedback', { message: 'Thanks for your feedback!' });
+  //             }
+  //           );
+  //         }
+  //       );
+  //     }
+  //   );
+  // };
 
