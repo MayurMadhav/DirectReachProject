@@ -116,7 +116,7 @@ To make the most of the DirectReach application, follow these steps:
 9. **Stay Informed**:
    - Keep an eye on the latest updates and features that are periodically rolled out.
 
-By following these steps, you can effectively use NewNewProject to connect, collaborate, and track the performance of your brand-influencer partnerships.
+By following these steps, you can effectively use DirectReach to connect, collaborate, and track the performance of your brand-influencer partnerships.
 
 ## Contributing
 
