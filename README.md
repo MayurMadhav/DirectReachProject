@@ -85,7 +85,7 @@ node app.js
   
 ## Usage
 
-To make the most of the NewNewProject application, follow these steps:
+To make the most of the DirectReach application, follow these steps:
 
 1. **User Registration**:
    - Both brands and influencers can register on the platform by providing their details.
